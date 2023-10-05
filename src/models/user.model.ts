@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { hashSync } from 'bcrypt';
 
 @Entity({ name: 'users' })
 export class User {
@@ -43,4 +44,9 @@ export class User {
 
     @Column('varchar', { nullable: true })
     complemento: string;
+
+    @BeforeInsert()
+    hashPassword() {
+        this.senha = hashSync(this.senha, 10);
+    }
 }
