@@ -1,4 +1,4 @@
-import { Catch, ExceptionFilter, HttpException, ArgumentsHost } from '@nestjs/common';
+import { Catch, ExceptionFilter, HttpException, ArgumentsHost, HttpStatus } from '@nestjs/common';
 
 @Catch()
 export class ExceptionHandler implements ExceptionFilter {
@@ -7,13 +7,27 @@ export class ExceptionHandler implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    const status = exception instanceof HttpException ? exception.getStatus() : 500;
-
-    response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      message: exception.message,
-    });
+    if (exception instanceof HttpException) {
+      const status = exception.getStatus();
+      // Verifique se a exceção é uma exceção de validação e retorne a resposta adequada
+      if (status === HttpStatus.BAD_REQUEST) {
+        return response.status(status).json({
+          statusCode: status,
+          timestamp: new Date().toISOString(),
+          path: request.url,
+          message: 'Erro de validação',
+          errors: exception.getResponse(),
+        });
+      }
+      // Se não for uma exceção de validação, trate-a de acordo com a lógica desejada
+      response.status(status).json({
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+        message: exception.message,
+      });
+    } else {
+      // Trate outras exceções aqui, se necessário
+    }
   }
 }

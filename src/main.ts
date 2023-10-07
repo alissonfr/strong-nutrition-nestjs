@@ -9,13 +9,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.setGlobalPrefix("strong-nutrition");
-  app.useGlobalFilters(new ExceptionHandler());
   app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-      forbidNonWhitelisted: true
-    }),
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
+  app.useGlobalFilters(new ExceptionHandler());
 
   const config = new DocumentBuilder()
     .setTitle("API para gerenciamento de uma loja de suplementos")
