@@ -12,7 +12,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
-  app.useGlobalFilters(new ExceptionHandler());
+  //app.useGlobalFilters(new ExceptionHandler());
 
   const config = new DocumentBuilder()
     .setTitle("API para gerenciamento de uma loja de suplementos")

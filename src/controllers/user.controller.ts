@@ -21,6 +21,11 @@ export class UserController {
     return this.userService.findById(idUser);
   }
 
+  @Get('email/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.userService.findByEmail(email);
+  }
+
   @Post()
   async create(@Body() body: UserDTO) {
     return await this.userService.create(body);

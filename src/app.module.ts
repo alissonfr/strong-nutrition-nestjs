@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserController } from './controllers/user.controller';
 import { UserService } from './services/user.service';
 import { UserModule } from './app/user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 const imports = [
   ConfigModule.forRoot(),
@@ -24,7 +25,7 @@ const services = [
 ]
 
 @Module({
-  imports: [...imports, UserModule],
+  imports: [...imports, UserModule, AuthModule],
   controllers: [...controllers],
   providers: [...services]
 })
