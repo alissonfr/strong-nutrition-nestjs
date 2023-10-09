@@ -12,9 +12,4 @@ export class AuthController {
     async login(@Req() req: any) {
         return await this.authService.login(req.user)
     }
-
-    @Get('ola')
-    async ola() {
-        return { message: 'Ola, mundo!' }
-    }
 }
