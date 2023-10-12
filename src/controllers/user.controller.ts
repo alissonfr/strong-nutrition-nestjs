@@ -29,8 +29,8 @@ export class UserController {
   }
 
   @Post()
-  async create(@Body() body: UserDTO) {
-    return await this.userService.create(body);
+  async create(@Body() user: UserDTO) {
+    return await this.userService.create(user);
   }
 
   @Put(':idUser')
