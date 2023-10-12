@@ -1,13 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { User } from 'src/models/user.model';
+import { UserDTO } from '../dtos/user.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) { }
+
+  async findOneOrFail(
+    options?: FindOneOptions<User>,
+  ) {
+    try {
+      return await this.usersRepository.findOneOrFail(options);
+    } catch (error) {
+      throw new NotFoundException(error.message);
+    }
+  }
 
   async find(): Promise<User[]> {
     return await this.usersRepository.find();
@@ -19,7 +30,14 @@ export class UserService {
     return user
   }
 
-  async create(user: User): Promise<User> {
+  async findByEmail(email: string) {
+    const user = await this.usersRepository.findOneBy({ email });
+    if (!user) throw new NotFoundException(`Usuário com email'${email}' não encontrado`);
+    return user;
+  }
+
+  async create(data: UserDTO) {
+    const user = this.usersRepository.create(data);
     return await this.usersRepository.save(user);
   }
 
