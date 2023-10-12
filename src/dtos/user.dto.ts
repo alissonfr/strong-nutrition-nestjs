@@ -1,7 +1,5 @@
 import { IsDateString, IsEmail, IsNotEmpty, IsOptional, Matches } from 'class-validator';
-
 import { RegExHelper } from '../helpers/regex.helper';
-import { MessagesHelper } from 'src/helpers/messages.helper';
 
 export class UserDTO {
   @IsNotEmpty()
@@ -22,7 +20,7 @@ export class UserDTO {
   email: string;
 
   @IsNotEmpty()
-  @Matches(RegExHelper.password, { message: MessagesHelper.PASSWORD_VALID })
+  @Matches(RegExHelper.password, { message: "A senha deve conter letras maiúsculas, minúsculas números e caracteres especiais" })
   senha: string;
 
   @IsOptional() // Indica que as propriedades abaixo são opcionais
