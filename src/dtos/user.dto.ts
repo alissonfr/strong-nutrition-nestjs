@@ -23,7 +23,7 @@ export class UserDTO {
   @Matches(RegExHelper.password, { message: "A senha deve conter letras maiúsculas, minúsculas números e caracteres especiais" })
   senha: string;
 
-  @IsOptional() // Indica que as propriedades abaixo são opcionais
+  @IsOptional()
   cep: string;
 
   @IsOptional()
