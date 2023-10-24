@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 
 import { User } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
@@ -8,7 +8,7 @@ import { PaginatorInterface } from 'src/interfaces/paginator.interface';
 
 
 @Controller('user')
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(
     private userService: UserService,
@@ -32,7 +32,13 @@ export class UserController {
   @Put(':idUser')
   async update(
     @Param('idUser') idUser: number,
-    @Body() user: User) {
+    @Body() user: UserDTO) {
     return this.userService.update(idUser, user);
+  }
+
+  @Delete(':idUser')
+  async delete(
+    @Param('idUser') idUser: number) {
+    return this.userService.delete(idUser);
   }
 }

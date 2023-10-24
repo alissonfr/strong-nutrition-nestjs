@@ -36,28 +36,38 @@ export class UserService {
     return { content: users, total };
   }
 
-  async findById(idUser: number) {
+  async findById(idUser: number): Promise<User> {
     const user = await this.usersRepository.findOneBy({ idUser });
     if (!user) throw new NotFoundException(`Usuário com ID '${idUser}' não encontrado`);
     return user
   }
 
-  async findByEmail(email: string) {
+  async findByEmail(email: string): Promise<User> {
     const user = await this.usersRepository.findOneBy({ email });
     if (!user) throw new NotFoundException(`Usuário com email'${email}' não encontrado`);
     return user;
   }
 
-  async create(data: UserDTO) {
+  async create(data: UserDTO): Promise<User> {
     const user = this.usersRepository.create(data);
     return await this.usersRepository.save(user);
   }
 
-  async update(idUser: number, user: User): Promise<User> {
+  async update(idUser: number, user: UserDTO): Promise<User> {
     const existingUser = await this.findById(idUser)
 
     Object.assign(existingUser, user);
 
     return this.usersRepository.save(existingUser);
+  }
+
+  async delete(idUser: number): Promise<void> {
+    const user = await this.findById(idUser);
+
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    await this.usersRepository.remove(user);
   }
 }

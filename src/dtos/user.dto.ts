@@ -39,7 +39,7 @@ export class UserDTO {
   rua: string;
 
   @IsOptional()
-  residencia: number;
+  residencia: string;
 
   @IsOptional()
   complemento: string;

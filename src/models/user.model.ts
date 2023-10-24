@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { hashSync } from 'bcrypt';
 
 @Entity({ name: 'users' })
@@ -18,34 +18,35 @@ export class User {
     @Column('varchar')
     telefone: string;
 
-    @Column('varchar')
+    @Column('varchar', { unique: true })
     email: string;
 
     @Column('varchar')
     senha: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true })
     cep: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true })
     uf: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true })
     cidade: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true })
     bairro: string;
 
-    @Column('varchar')
+    @Column('varchar', { nullable: true })
     rua: string;
 
-    @Column('integer')
-    residencia: number;
+    @Column('varchar', { nullable: true })
+    residencia: string;
 
     @Column('varchar', { nullable: true })
     complemento: string;
 
     @BeforeInsert()
+    @BeforeUpdate()
     hashPassword() {
         this.senha = hashSync(this.senha, 10);
     }
