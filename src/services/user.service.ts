@@ -36,6 +36,10 @@ export class UserService {
     return { content: users, total };
   }
 
+  async findAllNoPaginate(): Promise<User[]> {
+    return await this.usersRepository.find();
+  }
+
   async findById(idUser: number): Promise<User> {
     const user = await this.usersRepository.findOneBy({ idUser });
     if (!user) throw new NotFoundException(`Usuário com ID '${idUser}' não encontrado`);
