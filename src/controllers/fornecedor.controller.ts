@@ -1,13 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 
-import { User } from 'src/models/user.model';
-import { UserService } from 'src/services/user.service';
-import { UserDTO } from '../dtos/user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { PaginatorInterface } from 'src/interfaces/paginator.interface';
-import { FornecedorService } from 'src/services/fornecedor.service';
-import { Fornecedor } from 'src/models/fornecedor.model';
 import { FornecedorDTO } from 'src/dtos/fornecedor.dto';
+import { PaginatorInterface } from 'src/interfaces/paginator.interface';
+import { Fornecedor } from 'src/models/fornecedor.model';
+import { FornecedorService } from 'src/services/fornecedor.service';
 
 
 @Controller('fornecedor')
