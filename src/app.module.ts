@@ -11,12 +11,16 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from './services/auth.service';
+import { Fornecedor } from './models/fornecedor.model';
+import { FornecedorController } from './controllers/fornecedor.controller';
+import { FornecedorService } from './services/fornecedor.service';
 
 const imports = [
   ConfigModule.forRoot(),
   DatabaseConfig,
   TypeOrmModule.forFeature([
-    User
+    User,
+    Fornecedor
   ]),
   PassportModule,
   JwtModule.register({
@@ -27,12 +31,14 @@ const imports = [
 
 const controllers = [
   UserController,
-  AuthController
+  AuthController,
+  FornecedorController
 ]
 
 const services = [
   UserService,
-  AuthService
+  AuthService,
+  FornecedorService
 ]
 
 @Module({

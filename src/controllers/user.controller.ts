@@ -19,6 +19,11 @@ export class UserController {
     return this.userService.find(query);
   }
 
+  @Get('all')
+  findAllNoPaginate(): Promise<User[]> {
+    return this.userService.findAllNoPaginate();
+  }
+
   @Get(':idUser')
   findById(@Param('idUser') idUser: number) {
     return this.userService.findById(idUser);
