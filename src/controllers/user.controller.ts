@@ -6,7 +6,6 @@ import { UserDTO } from '../dtos/user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { PaginatorInterface } from 'src/interfaces/paginator.interface';
 
-
 @Controller('user')
 @UseGuards(AuthGuard('jwt'))
 export class UserController {
@@ -17,11 +16,6 @@ export class UserController {
   @Get()
   find(@Query() query): Promise<PaginatorInterface<User>> {
     return this.userService.find(query);
-  }
-
-  @Get('all')
-  findAllNoPaginate(): Promise<User[]> {
-    return this.userService.findAllNoPaginate();
   }
 
   @Get(':idUser')
