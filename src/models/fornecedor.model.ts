@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Produto } from './produto.model';
 
 @Entity({ name: 'fornecedores' })
 export class Fornecedor {
@@ -37,4 +38,7 @@ export class Fornecedor {
 
     @Column('varchar', { nullable: true })
     complemento: string;
+
+    @OneToMany(() => Produto, (produto) => produto.fornecedor)
+    produtos: Produto[]
 }
