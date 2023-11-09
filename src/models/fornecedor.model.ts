@@ -2,8 +2,8 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'fornecedores' })
 export class Fornecedor {
-    @PrimaryGeneratedColumn('increment', { name: 'cod_fornecedor' })
-    codFornecedor: number;
+    @PrimaryGeneratedColumn('increment', { name: 'id_fornecedor' })
+    idFornecedor: number;
 
     @Column('varchar', { name: 'razao_social' })
     razaoSocial: string;

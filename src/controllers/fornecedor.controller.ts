@@ -6,7 +6,6 @@ import { PaginatorInterface } from 'src/interfaces/paginator.interface';
 import { Fornecedor } from 'src/models/fornecedor.model';
 import { FornecedorService } from 'src/services/fornecedor.service';
 
-
 @Controller('fornecedor')
 @UseGuards(AuthGuard('jwt'))
 export class FornecedorController {
@@ -19,14 +18,9 @@ export class FornecedorController {
     return this.fornecedorService.find(query);
   }
 
-  @Get('all')
-  findAllNoPaginate(): Promise<Fornecedor[]> {
-    return this.fornecedorService.findAllNoPaginate();
-  }
-
-  @Get(':codFornecedor')
-  findByCodFornecedor(@Param('codFornecedor') codFornecedor: number) {
-    return this.fornecedorService.findByCodFornecedor(codFornecedor);
+  @Get(':idFornecedor')
+  findById(@Param('idFornecedor') idFornecedor: number) {
+    return this.fornecedorService.findById(idFornecedor);
   }
 
   @Post()
@@ -34,16 +28,16 @@ export class FornecedorController {
     return await this.fornecedorService.create(fornecedor);
   }
 
-  @Put(':codFornecedor')
+  @Put(':idFornecedor')
   async update(
-    @Param('codFornecedor') codFornecedor: number,
+    @Param('idFornecedor') idFornecedor: number,
     @Body() fornecedor: FornecedorDTO) {
-    return this.fornecedorService.update(codFornecedor, fornecedor);
+    return this.fornecedorService.update(idFornecedor, fornecedor);
   }
 
-  @Delete(':codFornecedor')
+  @Delete(':idFornecedor')
   async delete(
-    @Param('codFornecedor') codFornecedor: number) {
-    return this.fornecedorService.delete(codFornecedor);
+    @Param('idFornecedor') idFornecedor: number) {
+    return this.fornecedorService.delete(idFornecedor);
   }
 }

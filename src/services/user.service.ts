@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindOperator, ILike, Repository } from 'typeorm';
+import { FindManyOptions, FindOperator, ILike, Repository } from 'typeorm';
 import { User } from 'src/models/user.model';
 import { UserDTO } from '../dtos/user.dto';
 import { PaginatorInterface } from 'src/interfaces/paginator.interface';
@@ -14,10 +14,7 @@ export class UserService {
   async find(query): Promise<PaginatorInterface<User>> {
     const skip = (query.page - 1) * query.pageSize;
 
-    const where: {
-      nome?: string | FindOperator<string>;
-      email?: string | FindOperator<string>;
-    } = {};
+    const where: FindManyOptions<User>['where'] = {};
 
     if (query.nome) {
       where.nome = ILike(`%${query.nome}%`);
@@ -34,10 +31,6 @@ export class UserService {
     });
 
     return { content: users, total };
-  }
-
-  async findAllNoPaginate(): Promise<User[]> {
-    return await this.usersRepository.find();
   }
 
   async findById(idUser: number): Promise<User> {
