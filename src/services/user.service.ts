@@ -12,6 +12,11 @@ export class UserService {
   ) { }
 
   async find(query): Promise<PaginatorInterface<User>> {
+    if (!query.page && !query.pageSize) {
+      query.page = 1;
+      query.pageSize = 9999;
+    }
+
     const skip = (query.page - 1) * query.pageSize;
 
     const where: FindManyOptions<User>['where'] = {};

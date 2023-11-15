@@ -14,15 +14,19 @@ import { AuthService } from './services/auth.service';
 import { Fornecedor } from './models/fornecedor.model';
 import { FornecedorController } from './controllers/fornecedor.controller';
 import { FornecedorService } from './services/fornecedor.service';
+import { Produto } from './models/produto.model';
+import { ProdutoController } from './controllers/produto.controller';
+import { ProdutoService } from './services/produto.service';
 
 const imports = [
   ConfigModule.forRoot(),
   DatabaseConfig,
+  PassportModule,
   TypeOrmModule.forFeature([
     User,
-    Fornecedor
+    Fornecedor,
+    Produto
   ]),
-  PassportModule,
   JwtModule.register({
     privateKey: process.env.JWT_SECRET_KEY,
     signOptions: { expiresIn: '1h' },
@@ -32,13 +36,15 @@ const imports = [
 const controllers = [
   UserController,
   AuthController,
-  FornecedorController
+  FornecedorController,
+  ProdutoController
 ]
 
 const services = [
   UserService,
   AuthService,
-  FornecedorService
+  FornecedorService,
+  ProdutoService
 ]
 
 @Module({
