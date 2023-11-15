@@ -12,6 +12,11 @@ export class ProdutoService {
   ) { }
 
   async find(query): Promise<PaginatorInterface<Produto>> {
+    if (!query.page && !query.pageSize) {
+      query.page = 1;
+      query.pageSize = 9999;
+    }
+
     const skip = (query.page - 1) * query.pageSize;
 
     const where: FindManyOptions<Produto>['where'] = {};
