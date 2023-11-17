@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Fornecedor } from './fornecedor.model';
+import { Venda } from './venda.model';
 
 @Entity({ name: 'produtos' })
 export class Produto {
@@ -21,4 +22,12 @@ export class Produto {
     @ManyToOne(() => Fornecedor, (fornecedor) => fornecedor.produtos)
     @JoinColumn({ name: "id_fornecedor" })
     fornecedor: Fornecedor;
+
+    @ManyToMany(() => Venda, (venda) => venda.produtos)
+    @JoinTable({
+    name: 'venda_produto',
+    joinColumn: { name: 'id_produto', referencedColumnName: 'idProduto' },
+    inverseJoinColumn: { name: 'id_venda', referencedColumnName: 'idVenda' },
+    })
+    vendas: Venda[];
 }
