@@ -17,6 +17,10 @@ import { FornecedorService } from './services/fornecedor.service';
 import { Produto } from './models/produto.model';
 import { ProdutoController } from './controllers/produto.controller';
 import { ProdutoService } from './services/produto.service';
+import { Venda } from './models/venda.model';
+import { VendaProduto } from './models/venda-produto.model';
+import { VendaController } from './controllers/venda.controller';
+import { VendaService } from './services/venda.service';
 
 const imports = [
   ConfigModule.forRoot(),
@@ -25,7 +29,9 @@ const imports = [
   TypeOrmModule.forFeature([
     User,
     Fornecedor,
-    Produto
+    Produto,
+    Venda,
+    VendaProduto
   ]),
   JwtModule.register({
     privateKey: process.env.JWT_SECRET_KEY,
@@ -37,14 +43,16 @@ const controllers = [
   UserController,
   AuthController,
   FornecedorController,
-  ProdutoController
+  ProdutoController,
+  VendaController
 ]
 
 const services = [
   UserService,
   AuthService,
   FornecedorService,
-  ProdutoService
+  ProdutoService,
+  VendaService
 ]
 
 @Module({

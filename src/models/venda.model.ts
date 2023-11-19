@@ -1,6 +1,7 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 import { VendaStatus } from '../enums/venda-status.enum';
-import { Produto } from './produto.model';
+import { VendaProduto } from './venda-produto.model';
 
 @Entity({ name: 'vendas' })
 export class Venda {
@@ -20,13 +21,9 @@ export class Venda {
     status: VendaStatus;
 
     @Column('varchar', { nullable: true })
-    complemento: string;
+    observacao: string;
 
-    @ManyToMany(() => Produto, (produto) => produto.vendas)
-    @JoinTable({
-        name: 'venda_produto',
-        joinColumn: { name: 'id_venda', referencedColumnName: 'idVenda' },
-        inverseJoinColumn: { name: 'id_produto', referencedColumnName: 'idProduto' }
-    })
-    produtos: Produto[];
+    @OneToMany(() => VendaProduto, (vendaProduto) => vendaProduto.venda, { eager: true, cascade: true })
+    vendaProdutos: VendaProduto[];
+
 }
