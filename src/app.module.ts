@@ -21,6 +21,9 @@ import { Venda } from './models/venda.model';
 import { VendaProduto } from './models/venda-produto.model';
 import { VendaController } from './controllers/venda.controller';
 import { VendaService } from './services/venda.service';
+import { Cliente } from './models/cliente.model';
+import { ClienteController } from './controllers/cliente.controller';
+import { ClienteService } from './services/cliente.service';
 
 const imports = [
   ConfigModule.forRoot(),
@@ -31,7 +34,8 @@ const imports = [
     Fornecedor,
     Produto,
     Venda,
-    VendaProduto
+    VendaProduto,
+    Cliente
   ]),
   JwtModule.register({
     privateKey: process.env.JWT_SECRET_KEY,
@@ -44,7 +48,8 @@ const controllers = [
   AuthController,
   FornecedorController,
   ProdutoController,
-  VendaController
+  VendaController,
+  ClienteController
 ]
 
 const services = [
@@ -52,7 +57,8 @@ const services = [
   AuthService,
   FornecedorService,
   ProdutoService,
-  VendaService
+  VendaService,
+  ClienteService
 ]
 
 @Module({
