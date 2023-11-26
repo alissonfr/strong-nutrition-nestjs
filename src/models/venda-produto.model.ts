@@ -14,7 +14,7 @@ export class VendaProduto {
     @JoinColumn({ name: "id_venda" })
     venda: Venda;
 
-    @ManyToOne(() => Produto, (produto) => produto.vendaProdutos)
+    @ManyToOne(() => Produto, (produto) => produto.vendaProdutos, { eager: true })
     @JoinColumn({ name: "id_produto" })
     produto: Produto;
 }

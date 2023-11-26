@@ -1,13 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PaginatorInterface } from 'src/interfaces/paginator.interface';
+import { VendaProduto } from 'src/models/venda-produto.model';
 import { Venda } from 'src/models/venda.model';
-import { Repository } from 'typeorm';
+import { FindManyOptions, ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class VendaService {
   constructor(
     @InjectRepository(Venda) private vendaRepository: Repository<Venda>,
+    @InjectRepository(VendaProduto) private vendaProdutoRepository: Repository<VendaProduto>,
   ) { }
 
   async find(query): Promise<PaginatorInterface<Venda>> {
@@ -18,7 +20,14 @@ export class VendaService {
 
     const skip = (query.page - 1) * query.pageSize;
 
+    const where: FindManyOptions<Venda>['where'] = {};
+
+    if (query.observacao) {
+      where.observacao = ILike(`%${query.observacao}%`);
+    }
+
     const [vendas, total] = await this.vendaRepository.findAndCount({
+      where,
       take: query.pageSize,
       skip
     });
@@ -54,6 +63,12 @@ export class VendaService {
 
     if (!venda) {
       throw new NotFoundException('Venda não encontrada');
+    }
+
+    if (venda.vendaProdutos && venda.vendaProdutos.length > 0) {
+      venda.vendaProdutos.forEach(async (vendaProduto) => {
+        await this.vendaProdutoRepository.remove(vendaProduto);
+      })
     }
 
     await this.vendaRepository.remove(venda);

@@ -1,4 +1,6 @@
 import { IsEmail, IsNotEmpty, IsOptional } from 'class-validator';
+import { Cliente } from 'src/models/cliente.model';
+import { User } from 'src/models/user.model';
 
 export class ClienteDTO {
 

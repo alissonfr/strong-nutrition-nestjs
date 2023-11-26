@@ -1,5 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
-import { hashSync } from 'bcrypt';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'clientes' })
 export class Cliente {
@@ -8,7 +7,7 @@ export class Cliente {
 
     @Column('varchar')
     nome: string;
-    
+
     @Column('varchar')
     cpf: string;
 
@@ -17,7 +16,7 @@ export class Cliente {
 
     @Column('varchar')
     telefone: string;
-    
+
     @Column('varchar', { nullable: true })
     cep: string;
 
