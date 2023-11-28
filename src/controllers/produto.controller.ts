@@ -14,13 +14,13 @@ export class ProdutoController {
   ) { }
 
   @Get()
-  find(@Query() query): Promise<PaginatorInterface<Produto>> {
-    return this.produtoService.find(query);
+  async find(@Query() query): Promise<PaginatorInterface<Produto>> {
+    return await this.produtoService.find(query);
   }
 
   @Get(':idProduto')
-  findById(@Param('idProduto') idProduto: number) {
-    return this.produtoService.findById(idProduto);
+  async findById(@Param('idProduto') idProduto: number) {
+    return await this.produtoService.findById(idProduto);
   }
 
   @Post()
@@ -32,12 +32,12 @@ export class ProdutoController {
   async update(
     @Param('idProduto') idProduto: number,
     @Body() produto: ProdutoDTO) {
-    return this.produtoService.update(idProduto, produto);
+    return await this.produtoService.update(idProduto, produto);
   }
 
   @Delete(':idProduto')
   async delete(
     @Param('idProduto') idProduto: number) {
-    return this.produtoService.delete(idProduto);
+    return await this.produtoService.delete(idProduto);
   }
 }

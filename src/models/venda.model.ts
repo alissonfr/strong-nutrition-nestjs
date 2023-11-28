@@ -25,7 +25,7 @@ export class Venda {
     @Column('varchar', { nullable: true })
     observacao: string;
 
-    @ManyToOne(() => Cliente, { eager: true })
+    @ManyToOne(() => Cliente, { eager: true, cascade: true })
     @JoinColumn({ name: 'id_cliente' })
     cliente: Cliente;
 

@@ -14,13 +14,13 @@ export class UserController {
   ) { }
 
   @Get()
-  find(@Query() query): Promise<PaginatorInterface<User>> {
-    return this.userService.find(query);
+  async find(@Query() query): Promise<PaginatorInterface<User>> {
+    return await this.userService.find(query);
   }
 
   @Get(':idUser')
-  findById(@Param('idUser') idUser: number) {
-    return this.userService.findById(idUser);
+  async findById(@Param('idUser') idUser: number) {
+    return await this.userService.findById(idUser);
   }
 
   @Post()
@@ -32,12 +32,12 @@ export class UserController {
   async update(
     @Param('idUser') idUser: number,
     @Body() user: UserDTO) {
-    return this.userService.update(idUser, user);
+    return await this.userService.update(idUser, user);
   }
 
   @Delete(':idUser')
   async delete(
     @Param('idUser') idUser: number) {
-    return this.userService.delete(idUser);
+    return await this.userService.delete(idUser);
   }
 }

@@ -4,11 +4,13 @@ import { FindManyOptions, FindOperator, ILike, Repository } from 'typeorm';
 import { User } from 'src/models/user.model';
 import { UserDTO } from '../dtos/user.dto';
 import { PaginatorInterface } from 'src/interfaces/paginator.interface';
+import { VendaService } from './venda.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
+    private vendaService: VendaService,
   ) { }
 
   async find(query): Promise<PaginatorInterface<User>> {
@@ -68,6 +70,13 @@ export class UserService {
 
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
+    }
+
+    const vendas = await this.vendaService.findByIdUser(idUser);
+    if (vendas && vendas.length > 0) {
+      vendas.forEach(async (venda) => {
+        await this.vendaService.delete(venda.idVenda);
+      })
     }
 
     await this.usersRepository.remove(user);

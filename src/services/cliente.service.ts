@@ -4,11 +4,13 @@ import { ClienteDTO } from 'src/dtos/cliente.dto';
 import { PaginatorInterface } from 'src/interfaces/paginator.interface';
 import { Cliente } from 'src/models/cliente.model';
 import { FindManyOptions, ILike, Repository } from 'typeorm';
+import { VendaService } from './venda.service';
 
 @Injectable()
 export class ClienteService {
   constructor(
     @InjectRepository(Cliente) private clientesRepository: Repository<Cliente>,
+    private vendaService: VendaService,
   ) { }
 
   async find(query): Promise<PaginatorInterface<Cliente>> {
@@ -68,6 +70,13 @@ export class ClienteService {
 
     if (!cliente) {
       throw new NotFoundException('Cliente não encontrado');
+    }
+
+    const vendas = await this.vendaService.findByIdCliente(idCliente);
+    if (vendas && vendas.length > 0) {
+      vendas.forEach(async (venda) => {
+        await this.vendaService.delete(venda.idVenda);
+      })
     }
 
     await this.clientesRepository.remove(cliente);

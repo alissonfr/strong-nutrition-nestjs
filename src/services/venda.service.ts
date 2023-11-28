@@ -45,6 +45,20 @@ export class VendaService {
     return venda
   }
 
+  async findByIdCliente(idCliente: number): Promise<Venda[]> {
+    return this.vendaRepository
+      .createQueryBuilder('venda')
+      .where('venda.cliente.idCliente = :idCliente', { idCliente })
+      .getMany();
+  }
+
+  async findByIdUser(idUser: number): Promise<Venda[]> {
+    return this.vendaRepository
+      .createQueryBuilder('venda')
+      .where('venda.funcionario.idUser = :idUser', { idUser })
+      .getMany();
+  }
+
   async create(data: Partial<Venda>): Promise<Venda> {
     const venda = this.vendaRepository.create(data);
     return await this.vendaRepository.save(venda);

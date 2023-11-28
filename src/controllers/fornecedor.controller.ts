@@ -14,13 +14,13 @@ export class FornecedorController {
   ) { }
 
   @Get()
-  find(@Query() query): Promise<PaginatorInterface<Fornecedor>> {
-    return this.fornecedorService.find(query);
+  async find(@Query() query): Promise<PaginatorInterface<Fornecedor>> {
+    return await this.fornecedorService.find(query);
   }
 
   @Get(':idFornecedor')
-  findById(@Param('idFornecedor') idFornecedor: number) {
-    return this.fornecedorService.findById(idFornecedor);
+  async findById(@Param('idFornecedor') idFornecedor: number) {
+    return await this.fornecedorService.findById(idFornecedor);
   }
 
   @Post()
@@ -32,12 +32,12 @@ export class FornecedorController {
   async update(
     @Param('idFornecedor') idFornecedor: number,
     @Body() fornecedor: FornecedorDTO) {
-    return this.fornecedorService.update(idFornecedor, fornecedor);
+    return await this.fornecedorService.update(idFornecedor, fornecedor);
   }
 
   @Delete(':idFornecedor')
   async delete(
     @Param('idFornecedor') idFornecedor: number) {
-    return this.fornecedorService.delete(idFornecedor);
+    return await this.fornecedorService.delete(idFornecedor);
   }
 }

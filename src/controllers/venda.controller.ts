@@ -12,13 +12,13 @@ export class VendaController {
   ) { }
 
   @Get()
-  find(@Query() query): Promise<PaginatorInterface<Venda>> {
-    return this.vendaService.find(query);
+  async find(@Query() query): Promise<PaginatorInterface<Venda>> {
+    return await this.vendaService.find(query);
   }
 
   @Get(':idVenda')
-  findById(@Param('idVenda') idVenda: number) {
-    return this.vendaService.findById(idVenda);
+  async findById(@Param('idVenda') idVenda: number) {
+    return await this.vendaService.findById(idVenda);
   }
 
   @Post()
@@ -30,12 +30,12 @@ export class VendaController {
   async update(
     @Param('idVenda') idVenda: number,
     @Body() venda: Partial<Venda>) {
-    return this.vendaService.update(idVenda, venda);
+    return await this.vendaService.update(idVenda, venda);
   }
 
   @Delete(':idVenda')
   async delete(
     @Param('idVenda') idVenda: number) {
-    return this.vendaService.delete(idVenda);
+    return await this.vendaService.delete(idVenda);
   }
 }

@@ -14,13 +14,13 @@ export class ClienteController {
   ) { }
 
   @Get()
-  find(@Query() query): Promise<PaginatorInterface<Cliente>> {
-    return this.clienteService.find(query);
+  async find(@Query() query): Promise<PaginatorInterface<Cliente>> {
+    return await this.clienteService.find(query);
   }
 
   @Get(':idCliente')
-  findById(@Param('idCliente') idCliente: number) {
-    return this.clienteService.findById(idCliente);
+  async findById(@Param('idCliente') idCliente: number) {
+    return await this.clienteService.findById(idCliente);
   }
 
   @Post()
@@ -32,12 +32,12 @@ export class ClienteController {
   async update(
     @Param('idCliente') idCliente: number,
     @Body() cliente: ClienteDTO) {
-    return this.clienteService.update(idCliente, cliente);
+    return await this.clienteService.update(idCliente, cliente);
   }
 
   @Delete(':idCliente')
   async delete(
     @Param('idCliente') idCliente: number) {
-    return this.clienteService.delete(idCliente);
+    return await this.clienteService.delete(idCliente);
   }
 }
