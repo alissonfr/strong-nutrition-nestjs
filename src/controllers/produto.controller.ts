@@ -7,7 +7,7 @@ import { Produto } from 'src/models/produto.model';
 import { ProdutoService } from 'src/services/produto.service';
 
 @Controller('produto')
-//@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class ProdutoController {
   constructor(
     private produtoService: ProdutoService,
