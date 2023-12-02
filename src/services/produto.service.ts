@@ -33,7 +33,8 @@ export class ProdutoService {
       where,
       take: query.pageSize,
       skip,
-      relations: ['fornecedor']
+      relations: ['fornecedor'],
+      order: { idProduto: 'ASC' }
     });
 
     return { content: produtos, total };
