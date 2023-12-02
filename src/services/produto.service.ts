@@ -71,6 +71,10 @@ export class ProdutoService {
       throw new NotFoundException('Produto não encontrado');
     }
 
-    await this.produtoRepository.remove(produto);
+    try {
+      await this.produtoRepository.remove(produto);
+    } catch (error) {
+      throw new Error('Erro ao excluir o produto');
+    }
   }
 }
