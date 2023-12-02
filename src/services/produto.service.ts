@@ -33,7 +33,8 @@ export class ProdutoService {
       where,
       take: query.pageSize,
       skip,
-      relations: ['fornecedor']
+      relations: ['fornecedor'],
+      order: { idProduto: 'ASC' }
     });
 
     return { content: produtos, total };
@@ -70,6 +71,10 @@ export class ProdutoService {
       throw new NotFoundException('Produto não encontrado');
     }
 
-    await this.produtoRepository.remove(produto);
+    try {
+      await this.produtoRepository.remove(produto);
+    } catch (error) {
+      throw new Error('Erro ao excluir o produto');
+    }
   }
 }

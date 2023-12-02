@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 
 import { AuthGuard } from '@nestjs/passport';
 import { ProdutoDTO } from 'src/dtos/produto.dto';
@@ -36,8 +36,18 @@ export class ProdutoController {
   }
 
   @Delete(':idProduto')
-  async delete(
-    @Param('idProduto') idProduto: number) {
-    return await this.produtoService.delete(idProduto);
+  async delete(@Param('idProduto') idProduto: number) {
+    try {
+      await this.produtoService.delete(idProduto);
+      return { message: 'Produto apagado com sucesso!' };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error; // Repassar exceções HTTP diretamente
+      } else if (error instanceof NotFoundException) {
+        throw new HttpException({ message: error.message, statusCode: 404 }, HttpStatus.NOT_FOUND);
+      } else {
+        throw new HttpException({ message: 'Erro interno do servidor', statusCode: 500 }, HttpStatus.INTERNAL_SERVER_ERROR);
+      }
+    }
   }
 }
