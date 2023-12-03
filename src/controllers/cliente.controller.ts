@@ -7,7 +7,7 @@ import { Cliente } from 'src/models/cliente.model';
 import { ClienteService } from 'src/services/cliente.service';
 
 @Controller('cliente')
-//@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class ClienteController {
   constructor(
     private clienteService: ClienteService,

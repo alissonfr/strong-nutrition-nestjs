@@ -42,7 +42,7 @@ export class ProdutoController {
       return { message: 'Produto apagado com sucesso!' };
     } catch (error) {
       if (error instanceof HttpException) {
-        throw error; // Repassar exceções HTTP diretamente
+        throw error;
       } else if (error instanceof NotFoundException) {
         throw new HttpException({ message: error.message, statusCode: 404 }, HttpStatus.NOT_FOUND);
       } else {
